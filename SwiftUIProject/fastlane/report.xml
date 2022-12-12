@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.00037">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: pod_lib_lint" time="8.134464">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: version_bump_podspec" time="0.001022">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: git_add" time="0.019206">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: git_commit" time="0.048691">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: add_git_tag" time="0.02021">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: push_to_git_remote" time="2.197383">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: pod_push" time="9.096552">
+        
+          <failure message="/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:229:in `chdir'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:229:in `execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;Fastfile:45:in `release'&#10;Fastfile:23:in `block (2 levels) in parsing_binding'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/lane.rb:33:in `call'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:49:in `block in execute'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:45:in `chdir'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:45:in `execute'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/lane_manager.rb:47:in `cruise_lane'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/command_line_handler.rb:36:in `handle'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:187:in `call'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:157:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/commands_generator.rb:354:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/commands_generator.rb:43:in `start'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.211.0/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/usr/local/bin/fastlane:23:in `load'&#10;/usr/local/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/cli/exec.rb:58:in `load'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/cli/exec.rb:58:in `kernel_load'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/cli/exec.rb:23:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/cli.rb:486:in `exec'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/cli.rb:31:in `dispatch'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/cli.rb:25:in `start'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/exe/bundle:48:in `block in &lt;top (required)&gt;'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/lib/bundler/friendly_errors.rb:120:in `with_friendly_errors'&#10;/Library/Ruby/Gems/2.6.0/gems/bundler-2.3.26/exe/bundle:36:in `&lt;top (required)&gt;'&#10;/usr/local/bin/bundle:23:in `load'&#10;/usr/local/bin/bundle:23:in `&lt;main&gt;'&#10;&#10;Exit status of command 'pod trunk push' was 1 instead of 0.&#10;[32m&#10;[!] Found podspec `MyPod-Podspec.podspec`[0m&#10;Updating spec repo `trunk`&#10;&#10;CocoaPods 1.11.3 is available.&#10;To update use: `sudo gem install cocoapods`&#10;&#10;For more information, see https://blog.cocoapods.org and the CHANGELOG for this version at https://github.com/CocoaPods/CocoaPods/releases/tag/1.11.3&#10;&#10;Validating podspec&#10; -&gt; MyPod-Podspec -&gt; MyPod-Podspec (0.0.19)&#10;    - WARN  | source: Git SSH URLs will NOT work for people behind firewalls configured to only allow HTTP, therefore HTTPS is preferred.&#10;    - WARN  | url: There was a problem validating the URL git@github.com:rohit11/SwiftUIExamples.git.&#10;    - ERROR | [iOS] file patterns: The `source_files` pattern did not match any file.&#10;    - WARN  | [iOS] license: Unable to find a license file&#10;    - NOTE  | xcodebuild:  note: Using new build system&#10;    - NOTE  | xcodebuild:  note: Using codesigning identity override: -&#10;    - NOTE  | xcodebuild:  note: Build preparation complete&#10;    - NOTE  | [iOS] xcodebuild:  note: Planning&#10;    - NOTE  | [iOS] xcodebuild:  note: Building targets in dependency order&#10;    - NOTE  | [iOS] xcodebuild:  warning: Skipping code signing because the target does not have an Info.plist file and one is not being generated automatically. (in target 'App' from project 'App')&#10;&#10;[!] The spec did not pass validation, due to 1 error and 3 warnings.&#10;&#10;[!] Unable to read the license file `MyPod-Podspec` for the spec `MyPod-Podspec (0.0.19)`&#10;&#10;[!] Unable to read the license file `MyPod-Podspec` for the spec `MyPod-Podspec (0.0.19)`&#10;" />
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>
