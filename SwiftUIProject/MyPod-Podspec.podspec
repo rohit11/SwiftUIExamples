@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'MyPod-Podspec'
-    s.version          = '0.0.3'
+    s.version          = '0.0.4'
     s.summary          = 'By far the most SwiftUI view I have seen in my entire life. No joke.'
    
     s.description      = <<-DESC
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
                          DESC
    
     s.homepage         = 'https://github.com/rohitnisal/MyPod-Podspec.git'
-    s.license          = { :type => 'MIT', :file => 'LICENSE' }
+    s.license          = { :type => 'MIT', :file => 'MyPod-Podspec' }
     s.author           = { 'Rohit Nisal' => 'rohitnisal@gmail.com' }
     s.source           = { :git => 'git@github.com:rohitnisal/MyPod-Podspec.git', :tag => s.version.to_s }
    
