@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'MyPod-Podspec'
-    s.version          = '0.0.19'
+    s.version          = '0.0.20'
     s.summary          = 'By far the most SwiftUI view I have seen in my entire life. No joke.'
    
     s.description      = <<-DESC
