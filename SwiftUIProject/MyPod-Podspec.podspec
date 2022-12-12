@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
     s.homepage         = 'https://github.com/rohitnisal/MyPod-Podspec.git'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
     s.author           = { 'Rohit Nisal' => 'rohitnisal@gmail.com' }
-    s.source           = { :git => 'https://github.com/rohitnisal/MyPod-Podspec.git', :tag => s.version.to_s }
+    s.source           = { :git => 'git@github.com:rohitnisal/MyPod-Podspec.git', :tag => s.version.to_s }
    
     s.ios.deployment_target = '14.0'
     s.source_files = 'SwiftUIProject/*.{swift}'   
