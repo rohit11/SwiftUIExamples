@@ -1,6 +1,6 @@
 # SwiftUIExamples
 
-/*
+```
 import React, { useState, useMemo, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 
@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
 
 export default CalendarComponent;
 
-*/
+```
