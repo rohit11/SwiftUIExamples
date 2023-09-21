@@ -1,147 +1,225 @@
 # SwiftUIExamples
 
 ```
-import React, { useState, useMemo, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
+mport React, { useState, useCallback, useMemo } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const CalendarComponent = () => {
-  const [selectedDates, setSelectedDates] = useState<number[]>([]); // Declare selectedDates as an array of numbers
+const Calendar = () => {
+  const [selectedDates, setSelectedDates] = useState<Array<number>>([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const currentDate = new Date();
 
-  // Function to handle date selection
-  const handleDateSelect = useCallback(
-    (date: number) => {
-      // Check if the date is already selected
-      if (selectedDates.includes(date)) {
-        // If it's selected, remove it from the selectedDates array
-        setSelectedDates(selectedDates.filter((d) => d !== date));
-      } else {
-        // If it's not selected, add it to the selectedDates array
-        setSelectedDates([...selectedDates, date]);
-      }
+  const daysInMonth = useMemo(() => {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth() + 1;
+    // Update the number of days in February for leap years
+    var days = new Date(year, month, 0).getDate()
+    if (month === 1 && isLeapYear) {
+      days = 29;
+   }
+    return days;
+  }, [currentMonth]);
+
+  const isLeapYear = useMemo(() => {
+    const year = currentMonth.getFullYear();
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  }, [currentMonth]);
+
+  const toggleDateSelection = useCallback(
+    (day: number) => {
+         const isNotCurrentMonth = isPastMonth()
+      if (isNotCurrentMonth === false) {
+      setSelectedDates((prevSelectedDates) => {
+        if (prevSelectedDates.includes(day)) {
+          return prevSelectedDates.filter((date) => date !== day);
+        } else {
+          return [...prevSelectedDates, day];
+        }
+      });
+    }
     },
     [selectedDates]
   );
 
-  // Function to generate days of the displayed month
-  // Function to generate days of the displayed month
-const generateDaysOfMonth = useMemo(() => {
-  const year = currentMonth.getFullYear();
-  const month = currentMonth.getMonth();
-  let daysInMonth = new Date(year, month + 1, 0).getDate(); // Declare as 'let' to update for leap years
-  const firstDayOfMonth = new Date(year, month, 1).getDay();
-  const days = [];
-
-  // Function to check if a year is a leap year
-  const isLeapYear = (year: number) => {
-    return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-  };
-
-  // Update the number of days in February for leap years
-  if (month === 1 && isLeapYear(year)) {
-    daysInMonth = 29;
-  }
-
-  // Fill in the preceding empty slots in the first row
-  for (let i = 0; i < firstDayOfMonth; i++) {
-    days.push(<View key={`empty-${i}`} style={styles.emptyDay} />);
-  }
-
-  // Generate days of the month
-  for (let i = 1; i <= daysInMonth; i++) {
-    const isSelected = selectedDates.includes(i);
-
-    days.push(
-      <TouchableOpacity
-        key={i}
-        style={[
-          styles.day,
-          isSelected ? styles.selectedDay : null,
-        ]}
-        onPress={() => handleDateSelect(i)}
-      >
-        <Text style={isSelected ? styles.selectedText : null}>{i}</Text>
-      </TouchableOpacity>
-    );
-  }
-
-  return days;
-}, [currentMonth, selectedDates]);
+  const renderCalendarDays = useCallback(() => {
+    let calendarDays: any[] = [];
+    const firstDayOfMonth = new Date(
+      currentMonth.getFullYear(),
+      currentMonth.getMonth(),
+      1
+    ).getDay();
 
   
+    const emptyDays = Array.from({ length: firstDayOfMonth }, () => null);
+    calendarDays = [...calendarDays, ...emptyDays]
+    const days = (Array.from({ length: daysInMonth }, (_, index) => index + 1))
+    calendarDays = [...calendarDays, ...days]
 
-  // Function to handle month change
-  const handleMonthChange = (next: boolean) => {
-    const newMonth = new Date(currentMonth);
-    newMonth.setMonth(currentMonth.getMonth() + (next ? 1 : -1));
-    setCurrentMonth(newMonth);
+    return calendarDays;
+  }, [currentMonth, daysInMonth]);
+
+  const isFutureDate = useCallback( (day: number) => {
+    const isDisabled =
+   currentMonth.getFullYear() > currentDate.getFullYear() ||
+   (currentMonth.getFullYear() === currentDate.getFullYear() &&
+     currentMonth.getMonth() > currentDate.getMonth()) ||
+   (currentMonth.getFullYear() === currentDate.getFullYear() &&
+     currentMonth.getMonth() === currentDate.getMonth() &&
+     day > currentDate.getDate());
+     return isDisabled
+  }, [currentMonth]);
+
+  const isPastMonth = useCallback( () => {
+    const isPastMonth =
+   currentMonth.getFullYear() < currentDate.getFullYear() ||
+   (currentMonth.getFullYear() === currentDate.getFullYear() &&
+     currentMonth.getMonth() < currentDate.getMonth())
+     return isPastMonth
+  }, [currentMonth]);
+
+  const isTodaysMonth = useCallback( () => {
+    const isTodaysMonth =
+   (currentMonth.getFullYear() === currentDate.getFullYear() &&
+     currentMonth.getMonth() === currentDate.getMonth())
+     return isTodaysMonth
+  }, [currentMonth]);
+
+  const renderDay = (day: number) => {
+    const isSelected = selectedDates.includes(day);
+   const isDisabled = isFutureDate(day);
+    return (
+      <TouchableOpacity
+        key={day}
+        disabled={isDisabled}
+        style={[
+          styles.dayContainer,
+          {
+            backgroundColor: isSelected ? 'blue' : 'transparent',
+          },
+        ]}
+        onPress={() => toggleDateSelection(day)}
+      >
+        <View
+          style={[
+            styles.dayCircle,
+            {
+              borderColor: isSelected ? 'white' : 'transparent',
+            },
+          ]}
+        >
+          <Text
+            style={[styles.dayText,{
+              color: isSelected ? 'white' : isDisabled ? '#CBCCCD' : 'black',
+              textDecorationLine: isDisabled ? 'line-through' : 'none',
+              textDecorationColor: isDisabled ? '#CBCCCD' : 'transparent',
+            }, ]}
+          >
+            {day}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const handleNextMonth = () => {
+    setSelectedDates([])
+    const nextMonth = new Date(currentMonth);
+    nextMonth.setMonth(currentMonth.getMonth() + 1);
+    setCurrentMonth(nextMonth);
+  };
+
+  const handlePrevMonth = () => {
+    setSelectedDates([])
+    const nextMonth = new Date(currentMonth);
+    nextMonth.setMonth(currentMonth.getMonth() - 1);
+    setCurrentMonth(nextMonth);
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.header}>
-        <Button title="Previous Month" onPress={() => handleMonthChange(false)} />
-        <Text>{currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
-        <Button title="Next Month" onPress={() => handleMonthChange(true)} />
+      <Text>{currentMonth.toLocaleString('en-US', { month: 'long', year: 'numeric' })}</Text>
+        <TouchableOpacity onPress={() => handlePrevMonth()}>
+          <Text>Previous Month</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        disabled=  {isTodaysMonth()}
+        onPress={() => handleNextMonth()}
+        >
+          <Text>Next Month</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.daysOfWeek}>
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-          <Text key={day} style={styles.dayOfWeek}>
+        {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day, index) => (
+          <Text key={index} style={styles.dayOfWeekText}>
             {day}
           </Text>
         ))}
       </View>
-      <View style={styles.daysOfMonth}>{generateDaysOfMonth}</View>
+      <View style={styles.calendarContainer}>
+        {renderCalendarDays().map((day, index) => (
+          <View key={index} style={styles.day}>
+            {day !== null ? renderDay(day) : <Text />}
+          </View>
+        ))}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    padding: 10,
   },
   daysOfWeek: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    padding: 10,
+    paddingHorizontal: 0
   },
-  dayOfWeek: {
+  dayOfWeekText: {
     flex: 1,
     textAlign: 'center',
+    fontWeight: '600',
+    fontSize: 14,
   },
-  daysOfMonth: {
+  calendarContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   day: {
-    width: 36, // 7 days in a week
-    height: 36,
+    width: '14.28%', // 7 days in a week
     aspectRatio: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  selectedDay: {
-    backgroundColor: 'blue',
-    borderColor: 'blue',
-    borderRadius: 18
+  dayText: {
+    fontWeight: '500',
+    fontSize: 18,
+    textAlign: 'center',
+    color: 'black'
   },
-  selectedText: {
-    color: 'white',
+  dayContainer: {
+    width: 35,
+    height: 35,
+    borderRadius: 17.5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  emptyDay: {
-    width: 36, // 7 days in a week
-    height: 36,
-    aspectRatio: 1,
+  dayCircle: {
+    width: 35,
+    height: 35,
+    borderRadius: 17.5,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
-export default CalendarComponent;
+export default Calendar;
+
 
 ```
