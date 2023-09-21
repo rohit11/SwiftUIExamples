@@ -1,7 +1,7 @@
 # SwiftUIExamples
 
 ```
-mport React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Calendar = () => {
