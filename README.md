@@ -223,3 +223,191 @@ export default Calendar;
 
 
 ```
+
+
+```
+import React from "react";
+import { View, StyleSheet, Text } from "react-native";
+import Svg, { Path, Circle, G } from "react-native-svg";
+
+export type CircularSliderProps = {
+  /** Radius of Circular Slider */
+  trackRadius?: number;
+  /** Size of Thumb*/
+  thumbRadius?: number;
+  /** Size of Track */
+  trackWidth?: number;
+  /** percentage to show progess */
+  percentage?: number;
+  /** Minimum value */
+  minValue?: number;
+  /** Maximum value */
+  maxValue?: number;
+  /** Color for Track  */
+  trackColor?: string;
+  /** Color for Track Tint  */
+  trackTintColor?: string;
+  /** Color for Thumb  */
+  thumbColor?: string;
+  /** Color for Thumb fill  */
+  thumbFillColor?: string;
+  /** Show Thumb on Track  */
+  noThumb?: boolean;
+  /** Show text on center of circle  */
+  showText?: boolean;
+  /** Text color for center of circle  */
+  textColor?: string;
+  /** Text Size for center of circle  */
+  textSize?: number;
+};
+
+const CircularSlider: React.FC<CircularSliderProps> = ({
+  /** prop1 description */
+  thumbRadius = 12,
+  trackRadius = 100,
+  trackWidth = 5,
+  trackTintColor = "#e1e8ee",
+  trackColor = "#2089dc",
+  percentage = 75,
+  minValue = 0,
+  maxValue = 100,
+  noThumb = false,
+  showText = false,
+  thumbColor = "#2089dc",
+  textColor = "#2089dc",
+  thumbFillColor = 'white',
+  textSize = 18,
+}) => {
+  trackRadius = trackRadius / 2
+  thumbRadius = thumbRadius / 2
+  percentage = percentage >= 100 ? 99.9 : percentage
+  const valuePercentage = ((percentage - minValue) * 100) / maxValue;
+  console.log(percentage)
+  const strokeWidth = 4
+  const maxAngle = 359.9
+  const polarToCartesian = React.useCallback(
+    (angleToChange: number) => {
+      let r = trackRadius;
+      let hC = trackRadius + thumbRadius + strokeWidth;
+      let a = ((angleToChange - 90) * Math.PI) / 180.0;
+
+      let x = hC + r * Math.cos(a);
+      let y = hC + r * Math.sin(a);
+      return { x, y };
+    },
+    [trackRadius, thumbRadius]
+  );
+
+  const width = (trackRadius + thumbRadius + strokeWidth) * 2;
+  const startCoord = polarToCartesian(0);
+  const endCoord = polarToCartesian(valuePercentage * 3.6);
+  const endTintCoord = polarToCartesian(maxAngle);
+
+  return (
+    <View
+      style={{ width, height: width }}
+    >
+      <Svg width={width} height={width} >
+        <Path
+          stroke={trackTintColor}
+          strokeWidth={trackWidth}
+          d={[
+            "M",
+            startCoord.x,
+            startCoord.y,
+            "A",
+            trackRadius,
+            trackRadius,
+            0,
+            maxAngle <= 180 ? "0" : "1",
+            1,
+            endTintCoord.x,
+            endTintCoord.y,
+          ].join(" ")}
+        />
+        <Path
+          stroke={trackColor}
+          strokeWidth={trackWidth}
+          fill="none"
+          d={`M${startCoord.x} ${startCoord.y
+            } A ${trackRadius} ${trackRadius} 0 ${valuePercentage * 3.6 > 180 ? 1 : 0
+            } 1 ${endCoord.x} ${endCoord.y}`}
+        />
+
+        <View
+          style={{
+            elevation: 1, // Add elevation to this view
+            shadowColor: 'black',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 2,
+            backgroundColor: 'transparent',
+            alignItems: 'center', // Center align content horizontally
+            justifyContent: 'center', // Center align content vertically
+          }}
+        >
+          <Svg>
+            <Circle cx={trackRadius + thumbRadius + strokeWidth} cy={trackRadius + thumbRadius + strokeWidth} r={32} fill="white" />
+          </Svg>
+          {showText && (
+            <Text
+              style={styles.centeredText}
+            >
+              {Math.ceil(percentage).toString()}
+            </Text>
+          )}
+        </View>
+
+
+        {!noThumb && (
+          <G x={endCoord.x - thumbRadius} y={endCoord.y - thumbRadius}>
+            <Circle
+              r={thumbRadius}
+              cx={thumbRadius}
+              cy={thumbRadius}
+              fill={thumbFillColor}
+              strokeWidth={strokeWidth}
+              stroke={thumbColor}
+            />
+          </G>
+        )}
+      </Svg>
+    </View>
+  );
+};
+CircularSlider.defaultProps = {};
+
+export default CircularSlider;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#e5e5e5",
+  },
+  headerText: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 10,
+    fontWeight: "bold"
+  },
+  CircleShape: {
+    width: 64,
+    height: 64,
+    borderRadius: 64 / 2,
+    backgroundColor: 'white',
+    elevation: 1,
+    alignItems: 'center'
+
+  },
+
+  centeredText: {
+    position: 'absolute',
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+});
+```
